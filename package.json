@@ -6,13 +6,18 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest --run",
+    "lint": "prettier --check \"src/**\" --ignore-unknown",
+    "format": "prettier -w \"src/**\" --ignore-unknown"
   },
   "devDependencies": {
     "@types/node": "^20.4.2",
+    "prettier": "^3.0.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-plugin-dts": "^3.3.1"
+    "vite-plugin-dts": "^3.3.1",
+    "vitest": "^0.33.0"
   },
   "main": "./dist/match-operator.umd.cjs",
   "module": "./dist/match-operator.js",

@@ -12,4 +12,9 @@ export default defineConfig({
     },
   },
   plugins: [dts()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+    }
+  }
 });

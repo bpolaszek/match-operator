@@ -63,6 +63,13 @@ npm install match-operator --save # If you're using NPM
 yarn add match-operator # If you're using Yarn
 ```
 
+# Tests
+
+```
+npm run test # If you're using NPM
+yarn test # If you're using Yarn
+```
+
 # Disclaimer
 
 This is my first Typescript package - please be kind!
