@@ -39,21 +39,31 @@ import match from 'match-operator'
 const food = 'strawberry'
 const description = match(food, [
   ['apple', 'This food is an apple'],
-  [['strawberry', 'raspberry'], 'This food is a red fruit'],
+  ['strawberry', 'raspberry', 'This food is a red fruit'],
 ]) // This food is a red fruit
 
 const food = 'unknown'
 const description = match(food, [
   ['apple', 'This food is an apple'],
-  [['strawberry', 'raspberry'], 'This food is a red fruit'],
+  ['strawberry', 'raspberry', 'This food is a red fruit'],
 ]) // UnhandledMatchError
 
 const food = 'unknown'
 const description = match(food, [
   ['apple', 'This food is an apple'],
-  [['strawberry', 'raspberry'], 'This food is a red fruit'],
+  ['strawberry', 'raspberry', 'This food is a red fruit'],
   [match.default, 'This food is unknown']
 ]) // This food is unknown
+```
+
+## Alternate syntax
+
+You can use an array of subjects if you find it more readable.
+
+```js
+const description = match(food, [
+  [['strawberry', 'raspberry'], 'This food is a red fruit'],
+]) 
 ```
 
 # Installation

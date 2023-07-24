@@ -6,11 +6,14 @@ describe('match operator', () => {
     const alternatives = [
       ['apple', 'Apple'],
       [['strawberry', 'raspberry'], 'Red fruit'],
+      ['banana', 'pineapple', 'Yellow fruit'],
     ]
 
     expect(match('apple', alternatives)).toBe('Apple')
     expect(match('strawberry', alternatives)).toBe('Red fruit')
     expect(match('raspberry', alternatives)).toBe('Red fruit')
+    expect(match('banana', alternatives)).toBe('Yellow fruit')
+    expect(match('pineapple', alternatives)).toBe('Yellow fruit')
   });
 
   it.fails('yells when no default value is provided', () => {

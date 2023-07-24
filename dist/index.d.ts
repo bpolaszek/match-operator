@@ -1,11 +1,12 @@
 type scalar = string | number | boolean | null;
-type SingleConditionalExpression = scalar | object | Symbol;
-type MultipleConditionalExpressions = Array<SingleConditionalExpression>;
-type ConditionalExpression = SingleConditionalExpression | MultipleConditionalExpressions;
-type MatchingRule = [ConditionalExpression, any];
+type Subject = scalar | object | Symbol;
+type ReturnValue = any;
+type MultipleSubjects = Array<Subject>;
+type MatchingSubject = Subject | MultipleSubjects | [...MultipleSubjects];
+type MatchingRule = [MatchingSubject, ReturnValue];
 declare const defaultPlaceholder: unique symbol;
 declare const match: {
-    (subject: scalar, rules: Array<MatchingRule>): any;
+    (subject: Subject, rules: Array<MatchingRule>): any;
     default: typeof defaultPlaceholder;
 };
 export default match;
