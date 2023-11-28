@@ -36,7 +36,8 @@
   "exports": {
     ".": {
       "import": "./dist/match-operator.js",
-      "require": "./dist/match-operator.umd.cjs"
+      "require": "./dist/match-operator.umd.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
