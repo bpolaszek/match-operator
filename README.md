@@ -1,3 +1,5 @@
+[![CI Workflow](https://github.com/bpolaszek/match-operator/actions/workflows/ci.yml/badge.svg)](https://github.com/bpolaszek/match-operator/actions/workflows/ci.yml)
+
 # Match Operator
 
 PHP has a control structure named [match](https://www.php.net/manual/en/control-structures.match.php), 
