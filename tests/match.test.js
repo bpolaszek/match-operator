@@ -25,7 +25,7 @@ describe('match operator', () => {
         ['foo', (subject) => subject.toUpperCase()],
       ]),
     ).toBe('FOO')
-    expect(match(true, [[match.default, () => 'bar']])).toBe('bar')
+    expect(match('bar', [[match.default, (subject) => subject.toUpperCase()]])).toBe('BAR')
   })
 
   it.fails('yells when no default value is provided', () => {
