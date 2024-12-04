@@ -21,10 +21,8 @@ const match = <T extends Subject, R>(subject: T, rules: Array<MatchingRule<T, R>
   for (const [...expressions] of rules) {
     const lastValue = expressions.pop()
     if (!lastValue) continue
-    
-    const returnValue: R = typeof lastValue === 'function' 
-      ? (lastValue as () => R)()
-      : lastValue as R
+
+    const returnValue: R = typeof lastValue === 'function' ? (lastValue as () => R)() : (lastValue as R)
 
     for (const key of expressions.flat()) {
       if (!map.has(key as T)) {
