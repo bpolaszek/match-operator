@@ -66,7 +66,7 @@ const description = match(food, {
 }, fallback)
 ```
 
-This is equivalent to the array syntax and supports all features including default cases and function evaluation:
+This is equivalent to the array syntax and supports all features including function evaluation:
 
 ```js
 const description = match(food, {
