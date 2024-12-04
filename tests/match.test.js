@@ -16,6 +16,18 @@ describe('match operator', () => {
     expect(match('pineapple', alternatives)).toBe('Yellow fruit')
   });
 
+  it('evaluates functions', () => {
+    const triggerError = function () {
+      throw new Error('should not be called')
+    }
+    expect(match('foo', [
+        ['bar', triggerError],
+        ['foo', (subject) => subject.toUpperCase()],
+      ]),
+    ).toBe('FOO')
+    expect(match(true, [[match.default, () => 'bar']])).toBe('bar')
+  })
+
   it.fails('yells when no default value is provided', () => {
 
     const alternatives = [

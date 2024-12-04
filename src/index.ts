@@ -32,7 +32,13 @@ const match = (subject: Subject, rules: Array<MatchingRule>) => {
     throw new UnhandledMatchError(subject)
   }
 
-  return map.get(subject) ?? map.get(defaultPlaceholder)
+  const result = map.get(subject) ?? map.get(defaultPlaceholder)
+
+  if (typeof result === 'function') {
+    return result(subject)
+  }
+
+  return result
 }
 
 match.default = defaultPlaceholder
