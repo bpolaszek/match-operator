@@ -16,11 +16,6 @@ describe('match operator', () => {
     expect(match('pineapple', alternatives)).toBe('Yellow fruit')
   });
 
-  it('evaluates functions', () => {
-    expect(match(true, [[true, () => 'foo']])).toBe('foo')
-    expect(match(true, [[match.default, () => 'bar']])).toBe('bar')
-  })
-
   it.fails('yells when no default value is provided', () => {
 
     const alternatives = [

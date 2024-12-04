@@ -1,11 +1,12 @@
 type scalar = string | number | boolean | null;
 type Subject = scalar | object | Symbol;
-type MultipleSubjects<T> = Array<T>;
-type MatchingSubject<T> = T | MultipleSubjects<T> | [...MultipleSubjects<T>];
-type MatchingRule<T, R> = [MatchingSubject<T>, R];
+type ReturnValue = any;
+type MultipleSubjects = Array<Subject>;
+type MatchingSubject = Subject | MultipleSubjects | [...MultipleSubjects];
+type MatchingRule = [MatchingSubject, ReturnValue];
 declare const defaultPlaceholder: unique symbol;
 declare const match: {
-    <T extends Subject, R>(subject: T, rules: MatchingRule<T, R>[]): R;
+    (subject: Subject, rules: Array<MatchingRule>): any;
     default: typeof defaultPlaceholder;
 };
 export default match;
