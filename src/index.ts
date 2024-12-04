@@ -10,20 +10,25 @@ class UnhandledMatchError extends Error {
 
 type scalar = string | number | boolean | null
 type Subject = scalar | object | Symbol
-type ReturnValue = any
-type MultipleSubjects = Array<Subject>
-type MatchingSubject = Subject | MultipleSubjects | [...MultipleSubjects]
-type MatchingRule = [MatchingSubject, ReturnValue]
+type MultipleSubjects<T> = Array<T>
+type MatchingSubject<T> = T | MultipleSubjects<T> | [...MultipleSubjects<T>]
+type MatchingRule<T, R> = [MatchingSubject<T>, R]
 
 const defaultPlaceholder = Symbol()
 
-const match = (subject: Subject, rules: Array<MatchingRule>) => {
-  const map = new Map()
+const match = <T extends Subject, R>(subject: T, rules: Array<MatchingRule<T, R>>): R => {
+  const map = new Map<T | Symbol, R>()
   for (const [...expressions] of rules) {
-    const returnValue = expressions.pop()
+    const lastValue = expressions.pop()
+    if (!lastValue) continue
+    
+    const returnValue: R = typeof lastValue === 'function' 
+      ? (lastValue as () => R)()
+      : lastValue as R
+
     for (const key of expressions.flat()) {
-      if (!map.has(key)) {
-        map.set(key, returnValue)
+      if (!map.has(key as T)) {
+        map.set(key as T, returnValue)
       }
     }
   }
@@ -32,7 +37,7 @@ const match = (subject: Subject, rules: Array<MatchingRule>) => {
     throw new UnhandledMatchError(subject)
   }
 
-  return map.get(subject) ?? map.get(defaultPlaceholder)
+  return map.get(subject) ?? map.get(defaultPlaceholder)!
 }
 
 match.default = defaultPlaceholder
