@@ -14,9 +14,18 @@ type MultipleSubjects<T> = Array<T>
 type MatchingSubject<T> = T | MultipleSubjects<T> | [...MultipleSubjects<T>]
 type MatchingRule<T, R> = [MatchingSubject<T>, R]
 
-const defaultPlaceholder = Symbol()
+function die(error: Error): never {
+  throw error
+}
 
-const match = <T extends Subject, R>(subject: T, rules: Array<MatchingRule<T, R>>): R => {
+const defaultPlaceholder = Symbol()
+const defaultFallback = <T>(subject: T) => die(new UnhandledMatchError(subject))
+
+const match = <T extends Subject, R>(
+  subject: T,
+  rules: Array<MatchingRule<T, R>>,
+  fallback: any = defaultFallback<T>
+): R => {
   const map = new Map<T | Symbol, R>()
   for (const [...expressions] of rules) {
     const returnValue = expressions.pop() as R
@@ -27,8 +36,8 @@ const match = <T extends Subject, R>(subject: T, rules: Array<MatchingRule<T, R>
     }
   }
 
-  if (!map.has(subject) && !map.has(defaultPlaceholder)) {
-    throw new UnhandledMatchError(subject)
+  if (!map.has(defaultPlaceholder)) {
+    map.set(defaultPlaceholder, fallback)
   }
 
   const result = map.get(subject) ?? map.get(defaultPlaceholder)

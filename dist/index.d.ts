@@ -5,7 +5,7 @@ type MatchingSubject<T> = T | MultipleSubjects<T> | [...MultipleSubjects<T>];
 type MatchingRule<T, R> = [MatchingSubject<T>, R];
 declare const defaultPlaceholder: unique symbol;
 declare const match: {
-    <T extends Subject, R>(subject: T, rules: MatchingRule<T, R>[]): R;
+    <T extends Subject, R>(subject: T, rules: MatchingRule<T, R>[], fallback?: any): R;
     default: typeof defaultPlaceholder;
 };
 export default match;
