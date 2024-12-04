@@ -19,11 +19,7 @@ const defaultPlaceholder = Symbol()
 const match = <T extends Subject, R>(subject: T, rules: Array<MatchingRule<T, R>>): R => {
   const map = new Map<T | Symbol, R>()
   for (const [...expressions] of rules) {
-    const lastValue = expressions.pop()
-    if (!lastValue) continue
-
-    const returnValue: R = typeof lastValue === 'function' ? (lastValue as () => R)() : (lastValue as R)
-
+    const returnValue = expressions.pop() as R
     for (const key of expressions.flat()) {
       if (!map.has(key as T)) {
         map.set(key as T, returnValue)
@@ -35,7 +31,13 @@ const match = <T extends Subject, R>(subject: T, rules: Array<MatchingRule<T, R>
     throw new UnhandledMatchError(subject)
   }
 
-  return map.get(subject) ?? map.get(defaultPlaceholder)!
+  const result = map.get(subject) ?? map.get(defaultPlaceholder)
+
+  if (typeof result === 'function') {
+    return result(subject)
+  }
+
+  return result as R
 }
 
 match.default = defaultPlaceholder
