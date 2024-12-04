@@ -74,5 +74,27 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Check code style
+      - name: Get initial dist checksum
+        id: initial-checksum
+        run: |
+          if [ -d "dist" ]; then
+            echo "checksum=$(find dist -type f -exec md5sum {} \; | sort -k 2 | md5sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+          else
+            echo "checksum=none" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build
         run: yarn build
+
+      - name: Verify dist checksum
+        run: |
+          NEW_CHECKSUM=$(find dist -type f -exec md5sum {} \; | sort -k 2 | md5sum | cut -d' ' -f1)
+          INITIAL_CHECKSUM=${{ steps.initial-checksum.outputs.checksum }}
+          
+          if [ "$INITIAL_CHECKSUM" != "none" ] && [ "$NEW_CHECKSUM" != "$INITIAL_CHECKSUM" ]; then
+            echo "Error: dist folder content changed after build"
+            echo "Initial checksum: $INITIAL_CHECKSUM"
+            echo "New checksum: $NEW_CHECKSUM"
+            echo "Please run 'yarn build' locally and commit the changes."
+            exit 1
+          fi
