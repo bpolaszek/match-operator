@@ -1,21 +1,23 @@
-class s extends Error {
-  constructor(r, ...t) {
-    super(...t), this.name = "UnhandledMatchError", this.message = `Unhandled match value of type ${typeof r} - ${r}`, Error.captureStackTrace(this, s);
+class f extends Error {
+  constructor(e, ...n) {
+    super(...n), this.name = "UnhandledMatchError", this.message = `Unhandled match value of type ${typeof e} - ${e}`, Error.captureStackTrace(this, f);
   }
 }
-const a = Symbol(), h = (e, r) => {
-  const t = /* @__PURE__ */ new Map();
-  for (const [...n] of r) {
-    const f = n.pop();
-    for (const c of n.flat())
-      t.has(c) || t.set(c, f);
+function h(t) {
+  throw t;
+}
+const a = Symbol(), p = (t) => h(new f(t)), d = (t, e, n = p) => {
+  const r = /* @__PURE__ */ new Map(), l = Array.isArray(e) ? e : Object.entries(e).map(([o, c]) => [o, c]);
+  for (const [...o] of l) {
+    const c = o.pop();
+    for (const i of o.flat())
+      r.has(i) || r.set(i, c);
   }
-  if (!t.has(e) && !t.has(a))
-    throw new s(e);
-  const o = t.get(e) ?? t.get(a);
-  return typeof o == "function" ? o(e) : o;
+  r.has(a) || r.set(a, n);
+  const s = r.get(t) ?? r.get(a);
+  return typeof s == "function" ? s(t) : s;
 };
-h.default = a;
+d.default = a;
 export {
-  h as default
+  d as default
 };

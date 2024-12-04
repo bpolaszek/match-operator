@@ -71,4 +71,24 @@ describe('match operator', () => {
     expect(match(foo, alternatives)).toBe(3)
   });
 
+  it('accepts object-style rules', () => {
+    // Simple key-value matching
+    expect(match('apple', {
+      'apple': 'Apple',
+      'banana': 'Banana'
+    })).toBe('Apple')
+
+    // With default case
+    expect(match('orange', {
+      'apple': 'Apple',
+      'banana': 'Banana',
+    }, () => 'Unknown fruit')).toBe('Unknown fruit')
+
+    // With function evaluation
+    expect(match('hello', {
+      'hello': (subject) => subject.toUpperCase(),
+      'world': 'World'
+    })).toBe('HELLO')
+  });
+
 });
