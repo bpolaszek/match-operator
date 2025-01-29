@@ -1,7 +1,7 @@
 {
   "name": "match-operator",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Javascript port of PHP's match() control structure.",
   "author": "Beno!t POLASZEK",
   "license": "MIT",

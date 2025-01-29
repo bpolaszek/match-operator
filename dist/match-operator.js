@@ -3,10 +3,11 @@ class f extends Error {
     super(...n), this.name = "UnhandledMatchError", this.message = `Unhandled match value of type ${typeof e} - ${e}`, Error.captureStackTrace(this, f);
   }
 }
+const a = Symbol();
 function h(t) {
   throw t;
 }
-const a = Symbol(), p = (t) => h(new f(t)), d = (t, e, n = p) => {
+const p = (t) => h(new f(t)), d = (t, e, n = p) => {
   const r = /* @__PURE__ */ new Map(), l = Array.isArray(e) ? e : Object.entries(e).map(([o, c]) => [o, c]);
   for (const [...o] of l) {
     const c = o.pop();
